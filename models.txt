@@ -1,0 +1,6 @@
+decision tree
+random forest
+logistic regression
+linear svc
+K nearest neighbors
+xgboost
