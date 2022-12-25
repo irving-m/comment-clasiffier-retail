@@ -8,13 +8,12 @@ import pickle
 import os
 from collections import Counter
 import re
+
 regex = re.compile(r"[^a-zñáéíóúü\s]")
 
-path = r"C:\Users\Irving\PyCharm Projects\Talking Tom\Libros"
+path = os.path.join(os.getcwd(), "Libros")
 
-os.listdir(path)
-
-path2 = r"C:\Users\Irving\PyCharm Projects\Talking Tom\Big lists"
+path2 = os.path.join(os.getcwd(), "Big lists")
 
 with open(os.path.join(path2, "bigtexto.txt"), "r", encoding = "utf-8") as r:
     txt = " ".join(r.readlines())
