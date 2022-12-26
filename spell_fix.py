@@ -8,8 +8,7 @@ Created on Wed Aug 31 15:21:14 2022
 import pickle
 import os
 
-path = r"C:\Users\Irving\PyCharm Projects\Talking Tom\Big lists"
-
+path = os.path.join(os.getcwd(), "Big lists")
 
 with open(os.path.join(path, "gram1prob.pickle"), "rb") as g:
     gram1 = pickle.load(g)

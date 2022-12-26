@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 import pickle
 
-from spell_cat import lookup
+from spell_fix import lookup
 
 path = os.getcwd()
 

@@ -23,29 +23,18 @@ txtlist = txt2.split()
 txtlist2 = [" ".join(txtlist[i:i + 2]) for i, w in enumerate(txtlist)]
 txtlist3 = [" ".join(txtlist[i:i + 3]) for i, w in enumerate(txtlist)]
 
-words1 = Counter(txtlist)
-words2 = Counter(txtlist2)
-words3 = Counter(txtlist3)
+def get_prob(text_list):
+    words = Counter(text_list)
+    gram = dict(words.most_common())
+    gram = {k: v for k, v in gram.items() if v != 1}
+    n = sum(gram.values())
 
-gram1 = dict(words1.most_common())
-gram2 = dict(words2.most_common())
-gram3 = dict(words3.most_common())
+    return {k: v/n for k, v in gram.items()}
+    
 
-
-gram1 = {k: v for k, v in gram1.items() if v != 1}
-gram2 = {k: v for k, v in gram2.items() if v != 1}
-gram3 = {k: v for k, v in gram3.items() if v != 1}   
-
-n1 = sum(gram1.values())
-n2 = sum(gram2.values())
-n3 = sum(gram3.values())
-
-gram1prob = {k: v/n1 for k, v in gram1.items()}
-gram2prob = {k: v/n2 for k, v in gram2.items()}
-gram3prob = {k: v/n3 for k, v in gram3.items()}
-
-
-
+gram1prob = get_prob(txtlist)
+gram2prob = get_prob(txtlist2)
+gram3prob = get_prob(txtlist3)
 
 
 with open(os.path.join(path2, "gram1prob.pickle"), "wb") as f:
@@ -56,7 +45,5 @@ with open(os.path.join(path2, "gram2prob.pickle"), "wb") as f:
 
 with open(os.path.join(path2, "gram3prob.pickle"), "wb") as f:
     pickle.dump(gram3prob, f)
-
-
 
 

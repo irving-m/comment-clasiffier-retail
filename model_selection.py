@@ -24,26 +24,24 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import LinearSVC
 from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.ensemble import AdaBoostClassifier
 
-path = r"C:\Users\Irving\PyCharm Projects\Talking Tom"
+from spell_fix import lookup
 
-os.chdir(path)
 
-from spell_cat import lookup
+path = os.getcwd()
 
-with open(os.path.join(path, "Base Palancas.xlsx"), "rb") as g:
+with open(os.path.join(path, "train_set.xlsx"), "rb") as g:
     data = pd.read_excel(g)
     
 
-use = data[["Input", "Palanca2"]]
+use = data[["Input", "Label"]]
 use["Input"] = use["Input"].str.replace(r"[^\w\s]", "")
 use["Input"] = use["Input"].replace("", np.nan)
 
 df = use.dropna()
 df["fixed"] = df["Input"].apply(lookup)
 
-labels = list(set(df["Palanca2"]))
+labels = list(set(df["Label"]))
 
 def accuracy_multiclass(labels, y_true, x_test, model):
     mat = confusion_matrix(y_true, model.predict(x_test),
@@ -59,8 +57,8 @@ tests = pd.DataFrame(labels, columns= ["Clases"])
     
 # PARTICIÓN DE DATOS
 randomstate = 253
-X_train, X_test, y_train, y_test = train_test_split(df["fixed"], df["Palanca2"],
-                                                    stratify= df["Palanca2"],
+X_train, X_test, y_train, y_test = train_test_split(df["fixed"], df["Label"],
+                                                    stratify= df["Label"],
                                                     random_state= randomstate)
 
 stop = ["el", "la", "las", "los", "y", "o", "le", "me", "un", "una", "en",
@@ -164,11 +162,7 @@ svc.best_params_
 tests["svc"] = accuracy_multiclass(labels, y_test, X_test,
                                    svc).values()
 
-with open(os.path.join(path, "linearsvc.pickle"), "wb") as f:
-    pickle.dump(svc.best_estimator_, f)
 
-svc.predict(["pene"])
-    
 # K NEAREST NEIGHBORS
 knn_clf = Pipeline([("vec", vectorizer),
                      ("knn", KNeighborsClassifier())])
@@ -190,26 +184,6 @@ knn.fit(X_train, y_train)
 knn.best_params_
 tests["knn"] = accuracy_multiclass(labels, y_test, X_test,
                                    knn).values()
-knn.best_estimator_.classes_
-# ADABOOST CLASSIFIER
-
-ada_clf = Pipeline([("vec", vectorizer),
-                    ("ada", AdaBoostClassifier(base_estimator= DecisionTreeClassifier(max_depth= 15),
-                                               random_state= 14))])
-
-ada_grid = {"ada__n_estimators": [80, 100, 120],
-            "ada__algorithm": ["SAMME", "SAMME.R"]}
-            
-ada = GridSearchCV(ada_clf,
-                  param_grid= ada_grid,
-                  scoring= "precision_macro",
-                  cv= 5,
-                  verbose= 3)
-
-ada.fit(X_train, y_train)
-ada.best_params_
-tests["ada3"] = accuracy_multiclass(labels, y_test, X_test,
-                                   ada).values()
 
 
 # GRADIENT BOOST CLASSIFICATION
@@ -233,8 +207,12 @@ gb.best_params_
 tests["gb"] = accuracy_multiclass(labels, y_test, X_test,
                                   gb).values()
 
-
-
-with open(os.path.join(path, "testeo1.xlsx"), "wb") as f:
+   
+with open(os.path.join(path, "results.xlsx"), "wb") as f:
     tests.to_excel(f, sheet_name= "Raw")
 
+
+with open(os.path.join(path, "linearsvc.pickle"), "wb") as f:
+    pickle.dump(svc.best_estimator_, f)
+
+ 
