@@ -1,1 +1,4 @@
-# comment-clasiffier-retail
+# Comment classifier for retail
+## based in a Spanish dataset
+
+
