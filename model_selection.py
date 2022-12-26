@@ -30,7 +30,7 @@ from spell_fix import lookup
 
 path = os.getcwd()
 
-with open(os.path.join(path, "train_set.xlsx"), "rb") as g:
+with open(os.path.join(path, "comments_set.xlsx"), "rb") as g:
     data = pd.read_excel(g)
     
 

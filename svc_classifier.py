@@ -14,7 +14,7 @@ from spell_fix import lookup
 
 path = os.getcwd()
 
-with open(os.path.join(path, "Comentarios para ML.xlsx"), "rb") as g:
+with open(os.path.join(path, "Unmarked_comments.xlsx"), "rb") as g:
     data = pd.read_excel(g)
     
 with open(os.path.join(path, "linearsvc.pickle"), "rb") as g:
@@ -33,7 +33,7 @@ df["pred"] = svc.predict(df["fixed"])
 pred = pd.merge(data, df[["ID de respuesta", "pred"]],
                 how= "left", on= "ID de respuesta")
 
-with open(os.path.join(path, "Palancas ML.xlsx"), "wb") as f:
+with open(os.path.join(path, "ML_output.xlsx"), "wb") as f:
     pred[["ID de respuesta", "Input", "pred"]].to_excel(f, "predict", index= False)
 
 
