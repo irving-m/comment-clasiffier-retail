@@ -14,3 +14,6 @@ This function it's not vectorized yet, so it needs to be applied to each row at 
 ## model_selection.py
 
 Different models are tried out, results as shown
+
+![alt text](https://github.com/irving-m/comment-clasiffier-retail/blob/master/results.JPG?raw=true)
+
