@@ -211,7 +211,6 @@ tests["gb"] = accuracy_multiclass(labels, y_test, X_test,
 with open(os.path.join(path, "results.xlsx"), "wb") as f:
     tests.to_excel(f, sheet_name= "Raw")
 
-
 with open(os.path.join(path, "linearsvc.pickle"), "wb") as f:
     pickle.dump(svc.best_estimator_, f)
 
