@@ -1,7 +1,7 @@
 # Comment classifier for retail
 Based in Spanish comments for a tech business
 
-This is my first machine learning project. I might still need to tidy up my files because I made this before knowing how to use git and github.
+This is my first machine learning project. It utilizes a dataset from labeled comments to accurately classify the main subject a comment is talking about.
 
 ## word_bank.py
 Creates 1-gram, 2-gram and 3-gram dictionaries with its corresponding probabilities, based on a big text document (in Spanish).
